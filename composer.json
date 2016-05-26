@@ -1,0 +1,17 @@
+{
+    "name": "Elevator/Elevator",
+    "description": "Homework #2",
+    "authors": [
+        {
+            "name": "Igor Khanchuk",
+            "email": "mfc2005@ukr.net"
+        }
+    ],
+    "autoload": {
+        "psr-4": {"": "src/"}
+    },
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/console": "2.8.x-dev"
+    }
+}
