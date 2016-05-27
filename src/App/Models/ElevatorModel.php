@@ -32,17 +32,4 @@ class ElevatorModel{
     public  function dump(){
         return self::$elevatorData;
     }
-
-    public static function loadHumans($humans)
-    {
-        $kvo = self::$elevatorData["humanCargo"] + $humans;
-        if ($kvo > 4) {
-            self::setParam("locked",true);
-            throw new \Exception("Overloaded and stuck! Please, run 'elevator:repair to unlock' ");
-            return false;
-        }else{
-            self::$elevatorData["humanCargo"]=$kvo;
-            return true;
-        }
-    }
 }
