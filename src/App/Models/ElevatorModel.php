@@ -9,17 +9,17 @@ class ElevatorModel{
     use \App\Utils\Traits\Serializer;
     use \App\Utils\Traits\SingleTon;
 
-    public static function getParam($param)
+    public function getParam($param)
     {
         return self::$elevatorData[$param];
     }
 
-    public static function setParam($param,$val)
+    public  function setParam($param,$val)
     {
         self::$elevatorData[$param]=$val;
     }
 
-    public static function setDefault($default)
+    public  function setDefault($default)
     {
         self::$defaultData = $default;
     }
@@ -29,7 +29,7 @@ class ElevatorModel{
         self::serializeModel();
     }
 
-    public static function dump(){
+    public  function dump(){
         return self::$elevatorData;
     }
 

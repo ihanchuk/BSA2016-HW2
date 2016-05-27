@@ -42,7 +42,6 @@ class ProtoApp extends ConsoleApp{
             }
         }
 
-        $this->add(new Fibo());
         $this->add(new ElevatorLoad());
         $this->add(new ElevatorMove());
         $this->add(new ElevatorDebug());
