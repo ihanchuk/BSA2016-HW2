@@ -6,6 +6,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use \App\Models\ElevatorModel as Elevator;
 use \App\Controllers\ElevatorController as Controller;
 
@@ -40,14 +41,17 @@ class ElevatorLoad extends Command {
         $quantity = intval($input->getArgument('quantity'));
         $floor = intval($input->getArgument('floor'));
 
+        $header_style = new OutputFormatterStyle('white', 'green', array('bold'));
+        $output->getFormatter()->setStyle('header', $header_style);
+
         try{
             $this->controller->loadHumans($quantity,$floor);
         }catch (\Exception $e){
-            $output->writeln('<header>Elevator:: '.$e->getMessage().'</header>');
+            $output->writeln('<error> '.$e->getMessage().'</error>');
             return false;
         }finally{
             Elevator::serializeModel();
-            if(!$e) $output->writeln('<header>Loaded '.Elevator::getParam("humanCargo").'</header>');
+            if(!$e) $output->writeln('<info> '.Elevator::getParam("humanCargo").'passengers in Elevator </info>');
         }
     }
 }
