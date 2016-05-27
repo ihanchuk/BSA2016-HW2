@@ -7,6 +7,7 @@ class ElevatorModel{
     protected static $defaultData=[];
 
     use \App\Utils\Traits\Serializer;
+    use \App\Utils\Traits\SingleTon;
 
     public static function getParam($param)
     {
