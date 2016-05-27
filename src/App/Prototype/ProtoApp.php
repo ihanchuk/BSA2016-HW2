@@ -11,7 +11,7 @@ use \App\Commands\ElevatorLoad;
 use \App\Commands\ElevatorMove;
 use \App\Commands\ElevatorDebug;
 use \App\Commands\ElevatorRepair;
-
+// @TODO: отключить фибо
 /**
  * Class ProtoApp
  * @package App\Prototype
@@ -33,6 +33,7 @@ class ProtoApp extends ConsoleApp{
         try{
             ElevatorModel::loadModel();
         }catch (\Exception $e){
+            // @TODO: Разберись хренли тут этот ты закоментил.
            // print($e->getMessage());
         }finally{
             if (isset($e)){

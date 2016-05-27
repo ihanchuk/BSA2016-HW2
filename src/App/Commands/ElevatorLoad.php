@@ -46,12 +46,14 @@ class ElevatorLoad extends Command {
 
         try{
             $this->controller->loadHumans($quantity,$floor);
-        }catch (\Exception $e){
-            $output->writeln('<error> '.$e->getMessage().'</error>');
+        }catch (\Exception $error){
+            $output->writeln('<error> '.$error->getMessage().'</error>');
             return false;
         }finally{
             Elevator::serializeModel();
-            if(!$e) $output->writeln('<info> '.Elevator::getParam("humanCargo").'passengers in Elevator </info>');
+            if(!$error) {
+                $output->writeln('<info> '.Elevator::getParam("humanCargo").'passengers in Elevator </info>');
+            }
         }
     }
 }

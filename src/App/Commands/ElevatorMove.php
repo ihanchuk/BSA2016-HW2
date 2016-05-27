@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Commands;
-
+// @TODO: Перепроверить импорты
+// @TODO: Использовать фабрику для создания граф. виджетов
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -10,7 +11,9 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 
 class ElevatorMove extends Command {
-
+// @TODO: Наконецто закончить этот гребанный класс
+// @TODO: Добавить прогресс бар для отображения анимации
+//// @TODO: Создай новый стек лифта и выгружай пасажиров. Проверяй к-во выгруженных. Если что, кинь кастомный эксепшн
     protected function configure()
     {
         $quantity = 0;

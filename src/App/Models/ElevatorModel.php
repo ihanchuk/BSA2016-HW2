@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Models;
-
+// @TODO: Сделать пхп док
 class ElevatorModel{
     protected static $elevatorData=[];
     protected static $defaultData=[];

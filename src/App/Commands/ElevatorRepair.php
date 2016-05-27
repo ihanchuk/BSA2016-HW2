@@ -8,9 +8,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Helper\ProgressBar;
 use \App\Models\ElevatorModel as Elevator;
-
+// @TODO: Сделать phpDoc
 class ElevatorRepair extends Command {
-
+// @TODO: Если уж лифт выгружается, надо обнулить его стек очереди
     public function __construct($defaults){
         parent::__construct();
         $this->defaults = $defaults;
@@ -40,6 +40,8 @@ class ElevatorRepair extends Command {
 
         Elevator::setDefault($this->defaults);
         Elevator::reset();
+
+        // @TODO: Вот тут должно быть обнуление стека лифта.
 
         $output->writeln('<question> :::::::::::::::::::  !!! Elevator is now functional !!! :::::::::::::::::::</question>');
     }

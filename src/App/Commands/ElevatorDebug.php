@@ -8,7 +8,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use App\Models\ElevatorModel as Elevator;
 
-
 class ElevatorDebug extends Command {
 
 
