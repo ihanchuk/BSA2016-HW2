@@ -8,6 +8,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
+use App\Models\ElevatorModel as Elevator;
 
 
 class ElevatorDebug extends Command {
@@ -26,8 +27,12 @@ class ElevatorDebug extends Command {
         $path = ($dir.DIRECTORY_SEPARATOR."cache".DIRECTORY_SEPARATOR."data.ob");
         $res = unserialize(file_get_contents($path));
 
-        var_dump($res);
+        $locked =(Elevator::getParam("locked")) ? 'locked' : 'not locked';
 
-       // $output->writeln('<header>Pasengers:: '.$res->humanCargo.'</header>');
+        $output->writeln('<header>Humans:: '.Elevator::getParam("humanCargo").'</header>');
+        $output->writeln('<header>Locked:: '.$locked.'</header>');
+        $output->writeln('<header>Floor:: '.Elevator::getParam("curentFloor").'</header>');
+
+        var_dump(Elevator::dump());
     }
 }

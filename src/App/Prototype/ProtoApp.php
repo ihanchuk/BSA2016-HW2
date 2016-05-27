@@ -4,11 +4,7 @@ namespace App\Prototype;
 use App\Models\ElevatorModel;
 use Symfony\Component\Console\Application as ConsoleApp;
 use Symfony\Component\Console\Output\ConsoleOutput;
-use Symfony\Component\Console\Formatter\OutputFormatterStyle;
-use Symfony\Component\Console\Formatter\OutputFormatter;
 use Symfony\Component\Console\Helper\ProgressBar;
-use App\Factory\ElevatorFactory;
-use App\Controllers\ElevatorController;
 
 use \App\Commands\Fibo;
 use \App\Commands\ElevatorLoad;
@@ -37,10 +33,12 @@ class ProtoApp extends ConsoleApp{
         try{
             ElevatorModel::loadModel();
         }catch (\Exception $e){
-            print($e->getMessage());
+           // print($e->getMessage());
         }finally{
             if (isset($e)){
-                ElevatorModel::reset($conf);
+                $this->elevatorDefaults = $conf;
+                ElevatorModel::setDefault($conf);
+                ElevatorModel::reset();
             }
         }
 

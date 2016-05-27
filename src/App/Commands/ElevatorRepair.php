@@ -5,7 +5,6 @@ namespace App\Commands;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Input\InputArgument;
 use \App\Models\ElevatorModel as Elevator;
 
 class ElevatorRepair extends Command {
@@ -23,7 +22,7 @@ class ElevatorRepair extends Command {
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        Elevator::reset($this->defaults);
-        Elevator::serializeModel();
+        Elevator::setDefault($this->defaults);
+        Elevator::reset();
     }
 }
