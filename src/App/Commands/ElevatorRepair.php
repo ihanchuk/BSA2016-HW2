@@ -41,8 +41,13 @@ class ElevatorRepair extends Command {
         Elevator::setDefault($this->defaults);
         Elevator::reset();
 
-        // @TODO: Вот тут должно быть обнуление стека лифта.
+        // @TODO: Вот тут сделать обнуление стека лифта.
+        $control = new \App\Controllers\ElevatorController();
+        $control ->hardResetStack();
 
+        $output->writeln('<info>Stack and Elevator has been reseted to initial state</info>');
+        $output->writeln('');
         $output->writeln('<question> :::::::::::::::::::  !!! Elevator is now functional !!! :::::::::::::::::::</question>');
+
     }
 }

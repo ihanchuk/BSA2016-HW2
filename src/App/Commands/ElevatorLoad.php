@@ -21,7 +21,6 @@ class ElevatorLoad extends Command {
 
     protected function configure()
     {
-        $quantity = 0;
         $this->setName("elevator:load")
             ->setDescription("Loads humans to elevator <int>")
             ->addArgument(

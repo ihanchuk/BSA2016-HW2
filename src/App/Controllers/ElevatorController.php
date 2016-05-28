@@ -24,36 +24,50 @@ class ElevatorController{
     {
         $this->el = Elevator::getInstance();
         $this->stack = new \App\Utils\Stack\ElevatorStack();
-    }
+        $this->getStack();
 
-    public  function getPath(){
-        $dir = getcwd();
-        $path = ($dir.DIRECTORY_SEPARATOR."cache".DIRECTORY_SEPARATOR."data.sz");
-
-        return $path;
     }
 
     public function getStack(){
-        $data = file_get_contents($path);
-        $this->unserialize($data);
+        //@TODO используй спл!
+        $data = file_get_contents($this->stack->getPath());
+        $this->stack->unserialize($data);
     }
 
     public function saveStack($stack)
     {
-        file_put_contents($this->getPath(),$this->stack->serialize());
+        file_put_contents($this->stack->getPath(),$this->stack->serialize());
     }
 
+    public function hardResetStack()
+    {
+        unset($this->stack);
+        $this->stack = new \App\Utils\Stack\ElevatorStack();
+        file_put_contents($this->stack->getPath(),$this->stack->serialize());
+    }
+
+
     public function loadHumans($newPassengers,$floor){
-        if ($newPassengers <=0) {
-            throw new \Exception("Passengers must be > 0");
-        }
 
         $maxCapacity = $this->el->getParam("maxHumans");
         $passengers = $this->el->getParam("humanCargo");
 
+        $minFloor = $this->el->getParam("minFloor");
+        $maxFloor = $this->el->getParam("maxFloor");
+
+        if ($newPassengers <=0) {
+            throw new \Exception("Passengers must be > 0");
+        }
+
+        print("floor - ".$floor);
+
+        if($floor > $maxFloor || $floor <$minFloor){
+            throw new \Exception("Floor must set the right way!!");
+        }
+
         if( ($passengers + $newPassengers) <= $maxCapacity){
             $data = ["passengers"=>$newPassengers,"floor"=>$floor];
-            $this->stack->loadNewPassenger($data);
+            $this->stack->loadNew($data);
             $this->saveStack($this->stack);
 
             $this->el->setParam("humanCargo",$passengers + $newPassengers);
@@ -62,5 +76,9 @@ class ElevatorController{
         }else{
             throw new \Exception("::::::::::Elevator is jammed!::::::::");
         }
+    }
+
+    public function debugStack(){
+        return $this->stack;
     }
 }

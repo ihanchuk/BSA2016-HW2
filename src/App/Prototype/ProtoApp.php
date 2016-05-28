@@ -4,9 +4,7 @@ namespace App\Prototype;
 use App\Models\ElevatorModel;
 use Symfony\Component\Console\Application as ConsoleApp;
 use Symfony\Component\Console\Output\ConsoleOutput;
-use Symfony\Component\Console\Helper\ProgressBar;
 
-use \App\Commands\Fibo;
 use \App\Commands\ElevatorLoad;
 use \App\Commands\ElevatorMove;
 use \App\Commands\ElevatorDebug;
@@ -16,6 +14,8 @@ use \App\Commands\ElevatorRepair;
  * Class ProtoApp
  * @package App\Prototype
  */
+
+//@TODO вместо принта или эхо использовать вывод консоли симфони
 class ProtoApp extends ConsoleApp{
 
     protected $elevatorDefaults;
@@ -25,7 +25,6 @@ class ProtoApp extends ConsoleApp{
         parent::__construct($name, $version);
 
         $this->out = new ConsoleOutput();
-        $this->consoleWidgets["progressBar"] = new ProgressBar($this->out, 10);
     }
 
     public function configureApp($conf){
@@ -33,8 +32,7 @@ class ProtoApp extends ConsoleApp{
         try{
             ElevatorModel::loadModel();
         }catch (\Exception $e){
-            // @TODO: Разберись хренли тут этот ты закоментил.
-           // print($e->getMessage());
+            print($e->getMessage());
         }finally{
             if (isset($e)){
                 $this->elevatorDefaults = $conf;

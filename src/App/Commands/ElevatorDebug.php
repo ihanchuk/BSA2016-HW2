@@ -40,5 +40,12 @@ class ElevatorDebug extends Command {
         $output->writeln('<question> :::::::::::::::::::  !!! Dumping RAW Data !!! :::::::::::::::::::</question>');
 
         var_dump(Elevator::dump());
+
+        $output->writeln('<question> :::::::::::::::::::  !!! Dumping Raw Stack Data !!! :::::::::::::::::::</question>');
+
+        $contr = new \App\Controllers\ElevatorController();
+        $contr->getStack();
+
+        var_dump($contr->debugStack());
     }
 }
