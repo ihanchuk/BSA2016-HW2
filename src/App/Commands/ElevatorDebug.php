@@ -43,9 +43,17 @@ class ElevatorDebug extends Command {
 
         $output->writeln('<question> :::::::::::::::::::  !!! Dumping Raw Stack Data !!! :::::::::::::::::::</question>');
 
-        $contr = new \App\Controllers\ElevatorController();
-        $contr->getStack();
+        $stack = new \SplStack();
 
-        var_dump($contr->debugStack());
+        $dir = getcwd();
+        $path = ($dir.DIRECTORY_SEPARATOR."cache".DIRECTORY_SEPARATOR."data.sz");
+
+        $stack->unserialize(file_get_contents($path));
+
+        $output->writeln('<header>Objects in Stack.'.$stack->count().'</header>');
+        foreach ($stack as $el){
+            var_dump($el);
+            $output->writeln('____________________________________________');
+        }
     }
 }

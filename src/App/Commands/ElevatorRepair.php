@@ -28,24 +28,24 @@ class ElevatorRepair extends Command {
         $output->getFormatter()->setStyle('header', $header_style);
         $output->writeln('<question> :::::::::::::::::::  !!! Fixing this Elelevator !!! :::::::::::::::::::</question>');
 
-        $progressBar = new ProgressBar($output, 100);
-
-        for ($i = 0; $i<100; $i++) {
-            $progressBar->advance();
-            usleep(100000);
-        }
-
-        $progressBar->finish();
+//        $progressBar = new ProgressBar($output, 100);
+//
+//        for ($i = 0; $i<100; $i++) {
+//            $progressBar->advance();
+//            usleep(100000);
+//        }
+//
+//        $progressBar->finish();
         $output->writeln('');
 
         Elevator::setDefault($this->defaults);
         Elevator::reset();
 
         // @TODO: Вот тут сделать обнуление стека лифта.
-        $control = new \App\Controllers\ElevatorController();
-        $control ->hardResetStack();
+        $stack = new \App\Utils\Stack\ElevatorStack();;
+        $stack ->hardResetStack();
 
-        $output->writeln('<info>Stack and Elevator has been reseted to initial state</info>');
+        $output->writeln('<info> \'Stack\' and \'Elevator\' has been  reverted to initial state</info>');
         $output->writeln('');
         $output->writeln('<question> :::::::::::::::::::  !!! Elevator is now functional !!! :::::::::::::::::::</question>');
 

@@ -24,27 +24,11 @@ class ElevatorController{
     {
         $this->el = Elevator::getInstance();
         $this->stack = new \App\Utils\Stack\ElevatorStack();
-        $this->getStack();
+        $this->stack->getStack();
 
     }
 
-    public function getStack(){
-        //@TODO используй спл!
-        $data = file_get_contents($this->stack->getPath());
-        $this->stack->unserialize($data);
-    }
 
-    public function saveStack($stack)
-    {
-        file_put_contents($this->stack->getPath(),$this->stack->serialize());
-    }
-
-    public function hardResetStack()
-    {
-        unset($this->stack);
-        $this->stack = new \App\Utils\Stack\ElevatorStack();
-        file_put_contents($this->stack->getPath(),$this->stack->serialize());
-    }
 
 
     public function loadHumans($newPassengers,$floor){
@@ -59,8 +43,6 @@ class ElevatorController{
             throw new \Exception("Passengers must be > 0");
         }
 
-        print("floor - ".$floor);
-
         if($floor > $maxFloor || $floor <$minFloor){
             throw new \Exception("Floor must set the right way!!");
         }
@@ -68,7 +50,7 @@ class ElevatorController{
         if( ($passengers + $newPassengers) <= $maxCapacity){
             $data = ["passengers"=>$newPassengers,"floor"=>$floor];
             $this->stack->loadNew($data);
-            $this->saveStack($this->stack);
+            $this->stack->saveStack($this->stack);
 
             $this->el->setParam("humanCargo",$passengers + $newPassengers);
             $this->el->serializeModel();

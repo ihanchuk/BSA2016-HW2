@@ -20,10 +20,34 @@ class ElevatorStack extends \SplStack{
         return $this->path;
     }
 
+    public function hardResetStack()
+    {
+        unlink($this->path);
+
+        while($this->valid()) {
+            $stack->pop();
+        }
+        $this->saveStack();
+    }
+
+    public function getStack(){
+        //@TODO используй спл!
+        $data = file_get_contents($this->path);
+        $this->unserialize($data);
+        print("******************** Stack Loaded ******************");
+    }
+
+    public function saveStack()
+    {
+        print("******************** Stack Saved ******************");
+        file_put_contents($this->getPath(),$this->serialize());
+    }
+
     public function loadNew(Array $passenger){
         if(isset($passenger)){
             $this->push($passenger);
         }
+        print("*****************Pasengers Loaded*****************");
     }
 
 
