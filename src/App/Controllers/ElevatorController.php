@@ -45,7 +45,7 @@ class ElevatorController{
                 $this->el->serializeModel();
 
                 $this->el->setParam("humanCargo",$passengersLeft);
-                $this->el->setParam("floor",$floor);
+                $this->el->setParam("curentFloor",$floor);
 
                 return ("<header>Unloading {$passengersOut} passengers on {$floor} floor out of the elevator. Pasengers left -  {$passengersLeft} </header>");
             }else{
@@ -54,6 +54,7 @@ class ElevatorController{
 
         }else{
             $this->el->setParam("locked",true);
+            $this->el->serializeModel();
             throw new \Exception("All humans are unloaded.Elevator is stuck! run elevator:repair");
         }
 
@@ -77,11 +78,14 @@ class ElevatorController{
 
         if( ($passengers + $newPassengers) <= $maxCapacity){
             $data = ["passengers"=>$newPassengers,"floor"=>$floor];
+            $totalPassengers = $passengers + $newPassengers;
             $this->stack->loadNew($data);
             $this->stack->saveStack($this->stack);
 
             $this->el->setParam("humanCargo",$passengers + $newPassengers);
             $this->el->serializeModel();
+
+            return ("<header>Loaded {$newPassengers}. Passengers in elevator - {$totalPassengers}  </header>");
 
         }else{
             $this->el->setParam("locked",true);

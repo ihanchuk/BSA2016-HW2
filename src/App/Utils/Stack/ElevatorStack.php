@@ -34,12 +34,10 @@ class ElevatorStack extends \SplStack{
         //@TODO используй спл!
         $data = file_get_contents($this->path);
         $this->unserialize($data);
-        print("******************** Stack Loaded ******************");
     }
 
     public function saveStack()
     {
-        print("******************** Stack Saved ******************");
         file_put_contents($this->getPath(),$this->serialize());
     }
 
@@ -47,8 +45,5 @@ class ElevatorStack extends \SplStack{
         if(isset($passenger)){
             $this->push($passenger);
         }
-        print("*****************Pasengers Loaded*****************");
     }
-
-
 }

@@ -22,7 +22,7 @@ class ElevatorLoad extends Command {
     protected function configure()
     {
         $this->setName("elevator:load")
-            ->setDescription("Loads humans to elevator <int>")
+            ->setDescription("Loads humans to elevator <int> <int>")
             ->addArgument(
                 'quantity',
                 InputArgument::REQUIRED,
@@ -44,14 +44,14 @@ class ElevatorLoad extends Command {
         $output->getFormatter()->setStyle('header', $header_style);
 
         try{
-            $this->controller->loadHumans($quantity,$floor);
+           $mes =  $this->controller->loadHumans($quantity,$floor);
         }catch (\Exception $error){
             $output->writeln('<error> '.$error->getMessage().'</error>');
             return false;
         }finally{
             Elevator::serializeModel();
             if(!$error) {
-                $output->writeln('<info> '.Elevator::getParam("humanCargo").'passengers in Elevator </info>');
+                $output->writeln($mes);
             }
         }
     }
