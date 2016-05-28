@@ -16,8 +16,8 @@ use \App\Models\ElevatorModel as Elevator;
 class ElevatorController{
 // @TODO: Перепроверить загрузку сериализации
 // @TODO: Сделать phpDoc
-    protected $el;
-    protected $stack;
+    public $el;
+    public $stack;
 
 
     public function __construct()
@@ -28,8 +28,36 @@ class ElevatorController{
 
     }
 
+    public function unloadHumans(){
+        if ($this->stack->count() > 0){
 
+            if(!$this->el->getParam("locked")) {
+                $data = $this->stack->pop();
+                $this->stack->saveStack();
 
+                $allHumans =$this->el->getParam("humanCargo");
+
+                $passengersLeft= $allHumans - $data["passengers"];
+                $passengersOut = $data["passengers"];
+                $floor = $data["floor"];
+
+                $this->stack->saveStack();
+                $this->el->serializeModel();
+
+                $this->el->setParam("humanCargo",$passengersLeft);
+                $this->el->setParam("floor",$floor);
+
+                return ("<header>Unloading {$passengersOut} passengers on {$floor} floor out of the elevator. Pasengers left -  {$passengersLeft} </header>");
+            }else{
+                throw new \Exception("Elevator is stuck!! run elevator:repair to unlock");
+            }
+
+        }else{
+            $this->el->setParam("locked",true);
+            throw new \Exception("All humans are unloaded.Elevator is stuck! run elevator:repair");
+        }
+
+    }
 
     public function loadHumans($newPassengers,$floor){
 
@@ -56,7 +84,9 @@ class ElevatorController{
             $this->el->serializeModel();
 
         }else{
-            throw new \Exception("::::::::::Elevator is jammed!::::::::");
+            $this->el->setParam("locked",true);
+            $this->el->serializeModel();
+            throw new \Exception(":::::::::: Elevator is stuck! to unlock execute elevator:repair ::::::::");
         }
     }
 
